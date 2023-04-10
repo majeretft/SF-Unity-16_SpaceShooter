@@ -79,11 +79,14 @@ namespace SpaceShooter
 
             var direction = _virtualJoystick.Value;
 
-            var dotUp = Vector2.Dot(_shaceShip.transform.up, direction);
-            var dotRight = Vector2.Dot(_shaceShip.transform.right, direction);
+            // var dotUp = Vector2.Dot(_shaceShip.transform.up, direction);
+            // var dotRight = Vector2.Dot(_shaceShip.transform.right, direction);
 
-            _shaceShip.ThrustControl = Mathf.Max(0, dotUp);
-            _shaceShip.TorqueControl = -dotRight;
+            // _shaceShip.ThrustControl = Mathf.Max(0, dotUp);
+            // _shaceShip.TorqueControl = -dotRight;
+
+            _shaceShip.ThrustControl = direction.y;
+            _shaceShip.TorqueControl = -direction.x;
         }
     }
 }
