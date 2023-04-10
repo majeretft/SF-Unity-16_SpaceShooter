@@ -41,7 +41,6 @@ namespace SpaceShooter
         /// <summary>
         /// Reference to Rigit Body 2D
         /// </summary>
-        [SerializeField]
         private Rigidbody2D _rigidBodyComponent;
 
         /// <summary>

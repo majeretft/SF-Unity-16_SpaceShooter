@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699749283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.304, z: 0}
+  m_LocalPosition: {x: 0, y: -0.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83,13 +83,22 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.23493975
+        value: 0.10099487
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.14433652
+        value: 0.15856358
+        inSlope: 0.08767347
+        outSlope: 0.008014963
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 1
+        outWeight: 0.37047407
       - serializedVersion: 3
         time: 1
         value: 0
@@ -253,6 +262,7 @@ GameObject:
   - component: {fileID: 9072288646178177491}
   - component: {fileID: 9072288646178177489}
   - component: {fileID: 9072288646178177490}
+  - component: {fileID: 9072288645089727198}
   m_Layer: 0
   m_Name: SpaceShip_01
   m_TagString: Untagged
@@ -311,11 +321,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactiveName: Player
   _isInvincible: 0
-  _initialHitPoints: 0
-  _hitPoints: 0
+  _initialHitPoints: 100
+  _onDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _mass: 1
   _thrust: 1000
   _torque: 2000
   _speedLinearMax: 15
   _speedAngularMax: 360
-  _rigidBodyComponent: {fileID: 0}
+--- !u!114 &9072288645089727198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072288646178177500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abf074e6fe81ac48897cdc3212f6009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedDamageMultiplier: 0.1
+  _constantDamage: 1000

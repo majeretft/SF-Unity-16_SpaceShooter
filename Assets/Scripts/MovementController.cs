@@ -88,5 +88,10 @@ namespace SpaceShooter
             _shaceShip.ThrustControl = direction.y;
             _shaceShip.TorqueControl = -direction.x;
         }
+
+        public void SetTarget(Spaceship shaceShip)
+        {
+            _shaceShip = shaceShip;
+        }
     }
 }
