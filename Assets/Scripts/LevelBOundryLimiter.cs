@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SpaceShooter
 {
-    public class LevelBOundryLimiter : MonoBehaviour
+    public class LevelBoundryLimiter : MonoBehaviour
     {
         private void Update()
         {
