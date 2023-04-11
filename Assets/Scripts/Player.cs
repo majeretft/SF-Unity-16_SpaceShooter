@@ -14,9 +14,6 @@ namespace SpaceShooter
         private GameObject _shipPrefab;
 
         [SerializeField]
-        private GameObject _explosionPrefab;
-
-        [SerializeField]
         private CameraController _cameraController;
 
         [SerializeField]
@@ -36,31 +33,23 @@ namespace SpaceShooter
         {
             _lifeCount--;
 
-            GenerateExplosion();
+            if (_lifeCount > 0)
+                Respawn();
         }
 
         private void Respawn()
         {
-            if (_lifeCount <= 0)
-                return;
+            var wasExplodible = _ship.IsExplodible;
 
             var instance = Instantiate(_shipPrefab);
 
             _ship = instance.GetComponent<Spaceship>();
+            _ship.IsExplodible = wasExplodible;
 
             _cameraController.SetTarget(instance.transform);
             _movementController.SetTarget(_ship);
 
             RegisterEvent();
-        }
-
-        private void GenerateExplosion()
-        {
-            var instance = Instantiate(_explosionPrefab);
-            var explosion = instance.GetComponent<Explosion>();
-            explosion.SetTransform(transform.position, transform.rotation);
-
-            explosion.ExplosionFinishedEvent.AddListener(Respawn);
         }
     }
 }

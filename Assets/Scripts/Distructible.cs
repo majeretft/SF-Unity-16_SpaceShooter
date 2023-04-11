@@ -17,6 +17,17 @@ namespace SpaceShooter
         protected bool _isInvincible;
 
         /// <summary>
+        /// Object will explode before being destroyed
+        /// </summary>
+        [SerializeField]
+        protected bool _isExplodible;
+        public bool IsExplodible
+        {
+            get => _isExplodible;
+            set => _isExplodible = value;
+        }
+
+        /// <summary>
         /// Gets if object can`t be destroyed
         /// </summary>
         public bool IsInvincible => _isInvincible;
@@ -70,7 +81,13 @@ namespace SpaceShooter
             _hitPoints -= damage;
 
             if (_hitPoints <= 0)
-                HandleDistruction();
+            {
+                if (_isExplodible)
+                    Explode();
+                else
+                    HandleDistruction();
+
+            }
         }
 
         #endregion
@@ -78,11 +95,19 @@ namespace SpaceShooter
         /// <summary>
         /// Fires when HP becomes less then 0
         /// </summary>
+        protected virtual void Explode()
+        {
+            var explosion = ExplosionGenerator.Instance.GenerateExplosion(transform.position, transform.rotation);
+            explosion.ExplosionFinishedEvent.AddListener(HandleDistruction);
+        }
+
+        /// <summary>
+        /// Fires when HP becomes less then 0
+        /// </summary>
         protected virtual void HandleDistruction()
         {
-            Destroy(this.gameObject);
-
             _onDeathEvent?.Invoke();
+            Destroy(gameObject);
         }
     }
 }

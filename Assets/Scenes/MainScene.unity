@@ -205,7 +205,6 @@ MonoBehaviour:
   _lifeCount: 10
   _ship: {fileID: 2131000820}
   _shipPrefab: {fileID: 9072288646178177500, guid: bc13296a5cc67da4199db77e56040083, type: 3}
-  _explosionPrefab: {fileID: 627720587875537741, guid: 4b0ededaf6f72624d98b96969af36d97, type: 3}
   _cameraController: {fileID: 121619755}
   _movementController: {fileID: 121619753}
 --- !u!1 &519420028
@@ -494,6 +493,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1020495313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1020495315}
+  - component: {fileID: 1020495314}
+  m_Layer: 0
+  m_Name: ExplosionGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1020495314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020495313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1464302d33f2e6447bd01b0046a7c694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _doDonDestroyOnLoad: 1
+  _explosionPrefab: {fileID: 627720587875537741, guid: 4b0ededaf6f72624d98b96969af36d97, type: 3}
+--- !u!4 &1020495315
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020495313}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1099142030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,6 +1302,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9072288646178177490, guid: bc13296a5cc67da4199db77e56040083, type: 3}
+      propertyPath: _isExplodible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9072288646178177491, guid: bc13296a5cc67da4199db77e56040083, type: 3}
       propertyPath: m_RootOrder
       value: 1
