@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 9072288646178177489}
   - component: {fileID: 9072288646178177490}
   - component: {fileID: 9072288645089727198}
+  - component: {fileID: 9072288645089727199}
   m_Layer: 0
   m_Name: SpaceShip_01
   m_TagString: Untagged
@@ -321,6 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactiveName: Player
   _isInvincible: 0
+  _isExplodible: 1
   _initialHitPoints: 100
   _onDeathEvent:
     m_PersistentCalls:
@@ -344,3 +346,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedDamageMultiplier: 0.1
   _constantDamage: 1000
+--- !u!114 &9072288645089727199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072288646178177500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2260b12af6ee848b37855b96b8277f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
