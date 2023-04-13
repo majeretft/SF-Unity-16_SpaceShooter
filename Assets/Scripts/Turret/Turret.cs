@@ -14,7 +14,7 @@ namespace SpaceShooter
 
         private float _fireTimer;
 
-        public bool CanFire => _fireTimer < 0;
+        public bool CanFire => _fireTimer <= 0;
 
         private Spaceship _ship;
         #endregion
@@ -40,6 +40,7 @@ namespace SpaceShooter
 
             var projectile = Instantiate(_properties.ProjectilePrefab, transform.position, Quaternion.identity);
             projectile.transform.up = transform.up;
+            projectile.SetParentShooter(_ship);
 
             _fireTimer = _properties.FireRate;
 

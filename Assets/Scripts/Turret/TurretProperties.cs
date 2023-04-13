@@ -16,8 +16,8 @@ namespace SpaceShooter
         public TurretModeEnum Mode => _mode;
 
         [SerializeField]
-        private GameObject _projectilePrefab;
-        public GameObject ProjectilePrefab => _projectilePrefab;
+        private Projectile _projectilePrefab;
+        public Projectile ProjectilePrefab => _projectilePrefab;
 
         [SerializeField]
         private float _fireRate;
