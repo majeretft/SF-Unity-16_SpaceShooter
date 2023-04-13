@@ -14,6 +14,9 @@ namespace SpaceShooter
         [SerializeField] private VirtualJoystick _virtualJoystick;
         [SerializeField] private Spaceship _shaceShip;
 
+        [SerializeField] private PointerClickHold _touchFirePrimary;
+        [SerializeField] private PointerClickHold _touchFireSecondary;
+
         #region Unity Events
 
         private void Start()
@@ -21,19 +24,16 @@ namespace SpaceShooter
             if (Application.isEditor)
             {
                 _virtualJoystick.gameObject.SetActive(_currentControlType != ContolTypes.Keyboard);
+                _touchFirePrimary.gameObject.SetActive(_currentControlType != ContolTypes.Keyboard);
+                _touchFireSecondary.gameObject.SetActive(_currentControlType != ContolTypes.Keyboard);
+                
                 return;
             }
 
-            if (Application.isMobilePlatform)
-            {
-                _currentControlType = ContolTypes.TouchScreen;
-                _virtualJoystick.gameObject.SetActive(true);
-            }
-            else
-            {
-                _currentControlType = ContolTypes.Keyboard;
-                _virtualJoystick.gameObject.SetActive(false);
-            }
+            _currentControlType = Application.isMobilePlatform ? ContolTypes.TouchScreen : ContolTypes.Keyboard;
+            _virtualJoystick.gameObject.SetActive(Application.isMobilePlatform);
+            _touchFirePrimary.gameObject.SetActive(Application.isMobilePlatform);
+            _touchFireSecondary.gameObject.SetActive(Application.isMobilePlatform);
         }
 
         private void Update()
@@ -68,6 +68,12 @@ namespace SpaceShooter
             if (Input.GetKey(KeyCode.RightArrow))
                 torque = -1;
 
+            if (Input.GetKey(KeyCode.Space))
+                _shaceShip.Fire(TurretModeEnum.Primary);
+
+            if (Input.GetKey(KeyCode.X))
+                _shaceShip.Fire(TurretModeEnum.Secondary);
+
             _shaceShip.ThrustControl = thrust;
             _shaceShip.TorqueControl = torque;
         }
@@ -87,6 +93,12 @@ namespace SpaceShooter
 
             _shaceShip.ThrustControl = direction.y;
             _shaceShip.TorqueControl = -direction.x;
+
+            if (_touchFirePrimary.IsHold)
+                _shaceShip.Fire(TurretModeEnum.Primary);
+
+            if (_touchFireSecondary.IsHold)
+                _shaceShip.Fire(TurretModeEnum.Secondary);
         }
 
         public void SetTarget(Spaceship shaceShip)

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SpaceShooter
@@ -48,6 +50,12 @@ namespace SpaceShooter
         /// </summary>
         private TrailRenderer _trailComponent;
 
+        /// <summary>
+        /// Ship weapons
+        /// </summary>
+        [SerializeField]
+        private Turret[] _turrets;
+
         #endregion
 
         #region Public API
@@ -63,6 +71,18 @@ namespace SpaceShooter
         /// </summary>
         /// <value></value>
         public float TorqueControl { get; set; }
+
+        /// <summary>
+        /// Fire selected weapons
+        /// </summary>
+        /// <param name="mode">Selected weapon</param>
+        public void Fire(TurretModeEnum mode)
+        {
+            _turrets
+                .Where(x => x.Mode == mode)
+                .ToList()
+                .ForEach(x => x.Fire());
+        }
 
         #endregion
 
