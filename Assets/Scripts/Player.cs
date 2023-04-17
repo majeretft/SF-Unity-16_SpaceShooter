@@ -2,13 +2,14 @@ using UnityEngine;
 
 namespace SpaceShooter
 {
-    public class Player : MonoBehaviour
+    public class Player : SingletonBase<Player>
     {
         [SerializeField]
         private int _lifeCount;
 
         [SerializeField]
         private Spaceship _ship;
+        public Spaceship PlayerShip => _ship;
 
         [SerializeField]
         private GameObject _shipPrefab;

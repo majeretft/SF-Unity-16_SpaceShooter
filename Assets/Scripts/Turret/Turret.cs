@@ -38,6 +38,12 @@ namespace SpaceShooter
             if (!_properties || !CanFire)
                 return;
 
+            if (_mode == TurretModeEnum.Primary && _ship.DrawEnergy(_properties.EnergyCost) == false)
+                return;
+
+            if (_mode == TurretModeEnum.Secondary && _ship.DrawAmmo(_properties.AmmoCost) == false)
+                return;
+
             var projectile = Instantiate(_properties.ProjectilePrefab, transform.position, Quaternion.identity);
             projectile.transform.up = transform.up;
             projectile.SetParentShooter(_ship);
