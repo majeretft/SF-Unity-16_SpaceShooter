@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mode: 1
-  _properties: {fileID: 11400000, guid: 6e16d3950595b4d4fa20da4a3006124c, type: 2}
+  _properties: {fileID: 0}
 --- !u!1 &820766274
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,9 +402,10 @@ GameObject:
   - component: {fileID: 9072288646178177490}
   - component: {fileID: 9072288645089727198}
   - component: {fileID: 9072288645089727199}
+  - component: {fileID: 3562573913451533341}
   m_Layer: 0
   m_Name: SpaceShip_01
-  m_TagString: Untagged
+  m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -506,3 +507,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e2260b12af6ee848b37855b96b8277f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3562573913451533341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072288646178177500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239bc52688882f34581ed593b143d6fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detectionRadius: 10
+  _helperColor: {r: 1, g: 0, b: 0.8999996, a: 1}

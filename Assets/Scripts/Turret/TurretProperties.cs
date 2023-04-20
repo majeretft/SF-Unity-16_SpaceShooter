@@ -32,6 +32,18 @@ namespace SpaceShooter
         public int AmmoCost => _ammoCost;
 
         [SerializeField]
+        private bool _isHoming;
+        public bool IsHoming => _isHoming;
+
+        [SerializeField]
+        private int _multishotAmount;
+        public int MultishotAmount => _multishotAmount;
+
+        [SerializeField]
+        private float _multishotFireRate;
+        public float MultishotFireRate => _multishotFireRate;
+
+        [SerializeField]
         private AudioClip _fireSoundEffect;
         public AudioClip FireSoundEffect => _fireSoundEffect;
     }

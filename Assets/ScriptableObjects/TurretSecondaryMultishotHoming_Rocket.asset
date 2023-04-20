@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c638595f030a01547a8027924c2ce019, type: 3}
+  m_Name: TurretSecondaryMultishotHoming_Rocket
+  m_EditorClassIdentifier: 
+  _mode: 1
+  _projectilePrefab: {fileID: 6241129296474649444, guid: 4bb8dd0a854da884dace3d47481ef040, type: 3}
+  _fireRate: 5
+  _energyCost: 0
+  _ammoCost: 1
+  _isHoming: 1
+  _multishotAmount: 20
+  _multishotFireRate: 0.15
+  _fireSoundEffect: {fileID: 0}
