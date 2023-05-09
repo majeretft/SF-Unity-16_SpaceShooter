@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceShooter
@@ -9,6 +10,8 @@ namespace SpaceShooter
         {
             None,
             Patrol,
+            PatrolPointToPoint,
+            PatrolSphericalPerimeter,
         }
 
         [SerializeField]
@@ -16,6 +19,16 @@ namespace SpaceShooter
 
         [SerializeField]
         private AIPointPatrol _patrolPoint;
+        private List<Vector3> _patrolPoints;
+        private int _patrolPointCurrentNumber;
+
+        [Range(0f, 1f)]
+        [SerializeField]
+        private float _patrolWidthCoef;
+
+        [Range(0f, 90f)]
+        [SerializeField]
+        private float _patrolTangage;
 
         [Range(0f, 1f)]
         [SerializeField]
@@ -46,6 +59,8 @@ namespace SpaceShooter
         private const float MAX_TORQUE_ANGLE = 45;
 
         private Timer _randomizeTargetPositionTimer;
+        private Timer _fireTimer;
+        private Timer _findNewFireTargetTimer;
 
         private void Start()
         {
@@ -67,47 +82,139 @@ namespace SpaceShooter
 
             if (_behaviour == AiBehaviourEnum.Patrol)
                 UpdateBehaviourPatrol();
+
+            if (_behaviour == AiBehaviourEnum.PatrolPointToPoint)
+                UpdateBehaviourPatrolP2P();
+
+            if (_behaviour == AiBehaviourEnum.PatrolSphericalPerimeter)
+                UpdateBehaviourPatrolPerimeter();
+        }
+
+        private void UpdateBehaviourPatrolPerimeter()
+        {
+            ActionFindNewMoveTarget();
+            ActionOperateShip();
+            ActionFindNewAttackTarget(_patrolPoint.SearchAttackTargetRadius, _patrolPoint.transform.position);
+            ActionFire();
+            ActionEvadeCollision();
+        }
+
+        private void UpdateBehaviourPatrolP2P()
+        {
+            ActionFindNewMoveTarget();
+            ActionOperateShip();
+            ActionFindNewAttackTarget(_patrolPoint.SearchAttackTargetRadius, _patrolPoint.transform.position);
+            ActionFire();
+            ActionEvadeCollision();
         }
 
         private void UpdateBehaviourPatrol()
         {
             ActionFindNewMoveTarget();
             ActionOperateShip();
-            ActionFindNewAttackTarget();
+            ActionFindNewAttackTarget(_patrolPoint.SearchAttackTargetRadius, _patrolPoint.transform.position);
             ActionFire();
             ActionEvadeCollision();
         }
 
         private void ActionFindNewMoveTarget()
         {
+            if (_attackTarget != null)
+            {
+                _moveTarget = _attackTarget.transform.position;
+                return;
+            }
+
+            if (_patrolPoint == null)
+                return;
+
+            bool isInsidePatrolZone =
+                    (_patrolPoint.transform.position - transform.position).sqrMagnitude < _patrolPoint.Radius * _patrolPoint.Radius;
+
+            if (!isInsidePatrolZone)
+            {
+                _moveTarget = _patrolPoint.transform.position;
+                return;
+            }
+
+            if (!_randomizeTargetPositionTimer.IsFinished)
+                return;
+
+            _randomizeTargetPositionTimer.Restart();
+
             if (_behaviour == AiBehaviourEnum.Patrol)
             {
-                if (_attackTarget != null)
-                {
-                    _moveTarget = _attackTarget.transform.position;
-                }
-                else
-                {
-                    if (_patrolPoint != null)
-                    {
-                        bool isInsidePatrolZone =
-                            (_patrolPoint.transform.position - transform.position).sqrMagnitude < _patrolPoint.Radius * _patrolPoint.Radius;
+                var newPoint = Random.onUnitSphere * _patrolPoint.Radius + _patrolPoint.transform.position;
+                _moveTarget = newPoint;
+            }
+            if (_behaviour == AiBehaviourEnum.PatrolPointToPoint)
+            {
 
-                        if (isInsidePatrolZone == true)
-                        {
-                            if (_randomizeTargetPositionTimer.IsFinished)
-                            {
-                                _randomizeTargetPositionTimer.Start(_newMoveTargetTimout);
-                                var newPoint = Random.onUnitSphere * _patrolPoint.Radius + _patrolPoint.transform.position;
-                                _moveTarget = newPoint;
-                            }
-                        }
-                        else
-                        {
-                            _moveTarget = _patrolPoint.transform.position;
-                        }
-                    }
+                var capacity = 2;
+                if (_patrolPoints == null || _patrolPoints.Capacity != capacity)
+                {
+                    _patrolPoints = new List<Vector3>(capacity);
+
+                    // Создать врещение в начале координат по часовой стрелке
+                    var rotation = Quaternion.AngleAxis(-_patrolTangage, Vector3.forward);
+                    // Повернуть единичный вектор в начале координат
+                    var pointUnitPosition = rotation * Vector3.right;
+                    // Установить вектору требуемую длину
+                    var pointPosition = pointUnitPosition * _patrolWidthCoef * _patrolPoint.Radius;
+                    // Переместить вектор из начала координат в круг патруля
+                    var point1 = pointPosition + _patrolPoint.transform.position;
+                    // Создать второй вектор, который направлен в противоположную сторону
+                    var point2 = pointPosition * -1 + _patrolPoint.transform.position;
+
+                    _patrolPoints.Add(point1);
+                    _patrolPoints.Add(point2);
                 }
+
+                if (_moveTarget == _patrolPoints[0])
+                    _moveTarget = _patrolPoints[1];
+                else
+                    _moveTarget = _patrolPoints[0];
+            }
+
+            if (_behaviour == AiBehaviourEnum.PatrolSphericalPerimeter)
+            {
+                var patrolPointsAmount = Mathf.FloorToInt(2 * Mathf.PI * _patrolPoint.Radius / (_patrolPoint.Radius * _patrolWidthCoef));
+                if (patrolPointsAmount < 3)
+                    patrolPointsAmount = 3;
+                if (_patrolPointCurrentNumber < 1)
+                    _patrolPointCurrentNumber = 1;
+                if (_patrolPointCurrentNumber > patrolPointsAmount)
+                    _patrolPointCurrentNumber = 1;
+
+                var rotation = Quaternion.AngleAxis(-360 * _patrolPointCurrentNumber / patrolPointsAmount, Vector3.forward);
+
+                var dirUnit = rotation * Vector3.up;
+
+                var currentPatrolTarget = dirUnit * _patrolPoint.Radius * _patrolWidthCoef + _patrolPoint.transform.position;
+                _moveTarget = currentPatrolTarget;
+                _patrolPointCurrentNumber++;
+
+
+                // var capacity = Mathf.FloorToInt(_patrolPoint.Radius / Mathf.PI * 6);
+                // if (_patrolPoints == null || _patrolPoints.Capacity != capacity)
+                // {
+                //     _patrolPoints = new List<Vector3>(capacity);
+
+
+                // }
+
+                // for (int i = 0; i < _patrolPoints.Count; i++)
+                // {
+                //     if (_moveTarget == _patrolPoints[i])
+                //     {
+                //         if (i == _patrolPoints.Count - 1)
+                //             _moveTarget = _patrolPoints[0];
+                //         else
+                //             _moveTarget = _patrolPoints[i + 1];
+
+                //         break;
+                //     }
+                // }
             }
         }
 
@@ -129,9 +236,42 @@ namespace SpaceShooter
             return -angle;
         }
 
-        private void ActionFindNewAttackTarget()
+        private void ActionFindNewAttackTarget(float maxDistance, Vector2 searchOrigin)
         {
+            if (!_findNewFireTargetTimer.IsFinished)
+                return;
 
+            _findNewFireTargetTimer.Restart();
+
+            _attackTarget = FindClosestDistructible(maxDistance, searchOrigin);
+        }
+
+        private Distructible FindClosestDistructible(float maxDistance, Vector2 searchOrigin)
+        {
+            var maxDist = maxDistance;
+            Distructible closest = null;
+
+            foreach (var d in Distructible.AllDistructibles)
+            {
+                if (d.TeamId == Distructible.TEAM_NEUTRAL_ID)
+                    continue;
+
+                if (d.TeamId == _ship.TeamId)
+                    continue;
+
+                if (d.GetComponent<Spaceship>() == _ship)
+                    continue;
+
+                var dist = Vector2.Distance(searchOrigin, d.transform.position);
+
+                if (dist < maxDist)
+                {
+                    maxDist = dist;
+                    closest = d;
+                }
+            }
+
+            return closest;
         }
 
         private void ActionEvadeCollision()
@@ -144,7 +284,18 @@ namespace SpaceShooter
 
         private void ActionFire()
         {
+            if (!_attackTarget)
+                return;
 
+            if (!_fireTimer.IsFinished)
+                return;
+
+            var angle = Vector2.Angle(_ship.transform.up, (_attackTarget.transform.position - _ship.transform.position).normalized);
+            if (angle < 30)
+            {
+                _ship.Fire(TurretModeEnum.Primary);
+                _fireTimer.Restart();
+            }
         }
 
         #region Timers
@@ -152,11 +303,15 @@ namespace SpaceShooter
         private void InitTimers()
         {
             _randomizeTargetPositionTimer = new Timer(_newMoveTargetTimout);
+            _fireTimer = new Timer(_shootTimeout);
+            _findNewFireTargetTimer = new Timer(_selectNewTargetTimeout);
         }
 
         private void TickTimers()
         {
             _randomizeTargetPositionTimer.Tick(Time.deltaTime);
+            _fireTimer.Tick(Time.deltaTime);
+            _findNewFireTargetTimer.Tick(Time.deltaTime);
         }
 
         private void SetPatrolBehaviour(AIPointPatrol patrolPoint)
@@ -172,6 +327,10 @@ namespace SpaceShooter
             Gizmos.color = new Color(1, 0, 0);
             Gizmos.DrawSphere(_moveTarget, 0.1f);
             Gizmos.DrawLine(transform.position, transform.position + transform.up * _evadeRayLength);
+
+            if (_patrolPoints != null)
+                foreach (var p in _patrolPoints)
+                    Gizmos.DrawLine(_patrolPoint.transform.position, p);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -56,6 +57,16 @@ namespace SpaceShooter
         [SerializeField]
         private UnityEvent _onDeathEvent;
         public UnityEvent OnDeathEvent => _onDeathEvent;
+
+        private static HashSet<Distructible> _allDistructibles = new HashSet<Distructible>();
+        public static IReadOnlyCollection<Distructible> AllDistructibles => _allDistructibles;
+
+        public const int TEAM_NEUTRAL_ID = 0;
+
+        [SerializeField]
+        private int _teamId;
+        public int TeamId => _teamId;
+
         #endregion
 
         #region Unity Events
@@ -108,6 +119,17 @@ namespace SpaceShooter
         {
             _onDeathEvent?.Invoke();
             Destroy(gameObject);
+        }
+
+        protected virtual void OnEnable() {
+            if (_allDistructibles == null)
+                _allDistructibles = new HashSet<Distructible>();
+
+            _allDistructibles.Add(this);
+        }
+
+        protected virtual void OnDestroy() {
+            _allDistructibles.Remove(this);
         }
     }
 }
