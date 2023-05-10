@@ -52,5 +52,22 @@ namespace SpaceShooter
 
             RegisterEvent();
         }
+
+        #region Scores
+
+        public int Score { get; private set; }
+        public int KillScore { get; private set; }
+
+        public void AddScore(int amount)
+        {
+            Score += amount;
+        }
+
+        public void AddKillScore()
+        {
+            KillScore++;
+        }
+
+        #endregion
     }
 }

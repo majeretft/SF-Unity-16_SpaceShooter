@@ -175,3 +175,5 @@ MonoBehaviour:
   _onDeathEvent:
     m_PersistentCalls:
       m_Calls: []
+  _teamId: 0
+  _scoreValue: 1

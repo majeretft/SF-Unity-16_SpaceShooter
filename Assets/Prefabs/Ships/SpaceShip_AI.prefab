@@ -465,6 +465,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _behaviour: 1
   _patrolPoint: {fileID: 0}
+  _patrolWidthCoef: 0
+  _patrolTangage: 0
   _linearSpeed: 0.161
   _angularSpeed: 0.368
   _newMoveTargetTimout: 15
@@ -491,6 +493,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _teamId: 0
+  _scoreValue: 2
   _mass: 1
   _thrust: 1000
   _torque: 2000

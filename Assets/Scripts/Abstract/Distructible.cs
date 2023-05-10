@@ -131,5 +131,13 @@ namespace SpaceShooter
         protected virtual void OnDestroy() {
             _allDistructibles.Remove(this);
         }
+
+        #region Scores
+
+        [SerializeField]
+        private int _scoreValue;
+        public int ScoreValue => _scoreValue;
+
+        #endregion
     }
 }
