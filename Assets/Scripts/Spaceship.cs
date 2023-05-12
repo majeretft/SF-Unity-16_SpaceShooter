@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SpaceShooter
 {
@@ -33,12 +33,14 @@ namespace SpaceShooter
         /// </summary>
         [SerializeField]
         private float _speedLinearMax;
+        public float SpeedLinearMax => _speedLinearMax;
 
         /// <summary>
         /// Max radial speed
         /// </summary>
         [SerializeField]
         private float _speedAngularMax;
+        public float SpeedAngularMax => _speedAngularMax;
 
         /// <summary>
         /// Reference to Rigit Body 2D
@@ -88,6 +90,25 @@ namespace SpaceShooter
         /// </summary>
         [SerializeField]
         private int _energyRegen;
+
+        /// <summary>
+        /// Image reference of underlying sprite
+        /// </summary>
+        private Sprite _shipImage;
+        public Sprite ShipImage
+        {
+            get
+            {
+                if (_shipImage)
+                    return _shipImage;
+
+                var spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+                if (spriteRenderer)
+                    _shipImage = spriteRenderer.sprite;
+
+                return _shipImage;
+            }
+        }
 
         #endregion
 

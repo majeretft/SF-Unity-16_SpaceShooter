@@ -20,9 +20,17 @@ namespace SpaceShooter
         [SerializeField]
         private MovementController _movementController;
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (_ship != null)
+                Destroy(_ship.gameObject);
+        }
+
         private void Start()
         {
-            RegisterEvent();
+            Respawn();
         }
 
         private void RegisterEvent()
@@ -36,13 +44,18 @@ namespace SpaceShooter
 
             if (_lifeCount > 0)
                 Respawn();
+            else
+                LevelSequenceController.Instance.FinishCurrentLevel(false);
         }
 
         private void Respawn()
         {
+            if (LevelSequenceController.PlayerShip == null)
+                return;
+
             var wasExplodible = _ship.IsExplodible;
 
-            var instance = Instantiate(_shipPrefab);
+            var instance = Instantiate(LevelSequenceController.PlayerShip);
 
             _ship = instance.GetComponent<Spaceship>();
             _ship.IsExplodible = wasExplodible;

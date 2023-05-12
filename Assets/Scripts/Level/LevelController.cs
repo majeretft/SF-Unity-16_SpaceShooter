@@ -8,7 +8,7 @@ namespace SpaceShooter
         bool IsCompleted { get; }
     }
 
-    public class LevelController : MonoBehaviour
+    public class LevelController : SingletonBase<LevelController>
     {
         [SerializeField]
         private int _referenceTime;

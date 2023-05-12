@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 9072288645089727199}
   - component: {fileID: 3562573913451533341}
   m_Layer: 0
-  m_Name: SpaceShip_01
+  m_Name: SpaceShip_Player
   m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af2c8070bc1ae3444b635b2098809c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactiveName: Player
+  _interactiveName: Ship player 1
   _isInvincible: 0
   _isExplodible: 1
   _initialHitPoints: 100
