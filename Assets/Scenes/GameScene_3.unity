@@ -3643,7 +3643,7 @@ PrefabInstance:
       objectReference: {fileID: 2131000820}
     - target: {fileID: 6057426825433638399, guid: b69bd2dfa8e809740802ae382a5cd42a, type: 3}
       propertyPath: _referenceTime
-      value: 9999
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6057426825861659657, guid: b69bd2dfa8e809740802ae382a5cd42a, type: 3}
       propertyPath: _radius
@@ -3673,6 +3673,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2589939224242785464, guid: b48a24eed9e31d74098f6bc6abb729e5, type: 2}
+    - target: {fileID: 6057426826365594778, guid: b69bd2dfa8e809740802ae382a5cd42a, type: 3}
+      propertyPath: _requiredScore
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 6909784112714037761, guid: b69bd2dfa8e809740802ae382a5cd42a, type: 3}
       propertyPath: m_fontSize
       value: 100

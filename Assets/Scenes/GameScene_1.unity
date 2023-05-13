@@ -1798,7 +1798,7 @@ PrefabInstance:
       objectReference: {fileID: 2131000820}
     - target: {fileID: 6057426825433638399, guid: b69bd2dfa8e809740802ae382a5cd42a, type: 3}
       propertyPath: _referenceTime
-      value: 1
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6057426825861659657, guid: b69bd2dfa8e809740802ae382a5cd42a, type: 3}
       propertyPath: _radius
