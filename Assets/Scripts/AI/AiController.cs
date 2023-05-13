@@ -3,22 +3,25 @@ using UnityEngine;
 
 namespace SpaceShooter
 {
+    public enum AiBehaviourEnum
+    {
+        None,
+        Patrol,
+        PatrolPointToPoint,
+        PatrolSphericalPerimeter,
+    }
+
     [RequireComponent(typeof(Spaceship))]
     public class AiController : MonoBehaviour
     {
-        public enum AiBehaviourEnum
-        {
-            None,
-            Patrol,
-            PatrolPointToPoint,
-            PatrolSphericalPerimeter,
-        }
-
         [SerializeField]
         private AiBehaviourEnum _behaviour;
+        public AiBehaviourEnum Behaviour { get => _behaviour; set => _behaviour = value; }
 
         [SerializeField]
         private AIPointPatrol _patrolPoint;
+        public AIPointPatrol PatrolPoint { get => _patrolPoint; set => _patrolPoint = value; }
+
         private List<Vector3> _patrolPoints;
         private int _patrolPointCurrentNumber;
 

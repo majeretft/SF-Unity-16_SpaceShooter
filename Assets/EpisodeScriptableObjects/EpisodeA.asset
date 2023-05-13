@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EpisodeA
   m_EditorClassIdentifier: 
   _episodeName: Episode A
+  _episodeText: 'Starter mission: Get 10 points and lead straight to portal'
   _levels:
-  - MainScene
-  _previewImage: {fileID: 0}
+  - GameScene_1
+  _previewImage: {fileID: 21300000, guid: a3113c28a8d7152499fba439d6701fce, type: 3}

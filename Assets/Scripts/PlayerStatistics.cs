@@ -13,10 +13,21 @@ namespace SpaceShooter
         [field: SerializeField]
         public int Time { get; set; }
 
-        public void Reset() {
+        public int TimeRef { get; set; }
+
+        public bool IsTimeRecord { get; set; }
+
+        public void Reset()
+        {
             Kills = 0;
             Score = 0;
             Time = 0;
+            IsTimeRecord = false;
+        }
+
+        public PlayerStatistics Clone()
+        {
+            return (PlayerStatistics)this.MemberwiseClone();
         }
     }
 }

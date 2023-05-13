@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 namespace SpaceShooter
@@ -15,6 +16,14 @@ namespace SpaceShooter
         public bool IsLevelSuccess { get; private set; }
 
         public PlayerStatistics LevelStats { get; private set; }
+
+        public List<PlayerStatistics> GameStats { get; private set; }
+
+        protected override void Awake() {
+            base.Awake();
+
+            GameStats = new List<PlayerStatistics>();
+        }
 
         public void StartEpisode(Episode episode)
         {
@@ -36,6 +45,7 @@ namespace SpaceShooter
         {
             IsLevelSuccess = success;
             CalculateLevelStats();
+            GameStats.Add(LevelStats.Clone());
 
             ResultPanelController.Instance.ShowResults(LevelStats, IsLevelSuccess);
         }
@@ -60,7 +70,13 @@ namespace SpaceShooter
         {
             LevelStats.Score = Player.Instance.Score;
             LevelStats.Kills = Player.Instance.KillScore;
-            LevelStats.Time = (int) LevelController.Instance.LevelTimer;
+            LevelStats.Time = (int)LevelController.Instance.LevelTimer;
+            LevelStats.TimeRef = (int)LevelController.Instance.ReferenceTime;
+
+            var isTimeRecord = LevelController.Instance.LevelTimer < LevelController.Instance.ReferenceTime;
+            if (isTimeRecord)
+                LevelStats.Score *= 2;
+            LevelStats.IsTimeRecord = isTimeRecord;
         }
     }
 }

@@ -462,14 +462,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af2c8070bc1ae3444b635b2098809c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactiveName: Ship player 2
+  _interactiveName: GARMz
   _isInvincible: 0
   _isExplodible: 1
   _initialHitPoints: 100
   _onDeathEvent:
     m_PersistentCalls:
       m_Calls: []
-  _teamId: 0
+  _teamId: 5
   _scoreValue: 2
   _mass: 1
   _thrust: 1000

@@ -15,6 +15,9 @@ namespace SpaceShooter
         private TextMeshProUGUI _time;
 
         [SerializeField]
+        private TextMeshProUGUI _timeRecord;
+
+        [SerializeField]
         private TextMeshProUGUI _result;
 
         [SerializeField]
@@ -37,7 +40,8 @@ namespace SpaceShooter
 
             _kills.text = $"Kills: {levelResults.Kills}";
             _score.text = $"Score: {levelResults.Score}";
-            _time.text = $"Time: {levelResults.Time}";
+            _time.text = $"Time: {levelResults.Time} / Ref time: {levelResults.TimeRef}";
+            _timeRecord.text = levelResults.IsTimeRecord ? "Double Score for time achivement!" : string.Empty;
 
             Time.timeScale = 0;
         }

@@ -10,6 +10,10 @@ namespace SpaceShooter
         public string EpisodeName => _episodeName;
 
         [SerializeField]
+        private string _episodeText;
+        public string EpisodeText => _episodeText;
+
+        [SerializeField]
         private string[] _levels;
         public string[] Levels => _levels;
 

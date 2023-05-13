@@ -25,7 +25,7 @@ namespace SpaceShooter
             if (!_prefab)
                 return;
 
-            _shipname.text = _prefab.name;
+            _shipname.text = _prefab.InteractiveName;
             _hitpoints.text = $"Hit points {_prefab.InitialHitPoints}";
             _speed.text = $"Speed {_prefab.SpeedLinearMax}";
             _agility.text = $"Agility {_prefab.SpeedAngularMax}";

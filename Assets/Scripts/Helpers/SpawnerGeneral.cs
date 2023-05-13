@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace SpaceShooter
@@ -12,6 +13,9 @@ namespace SpaceShooter
 
         [SerializeField]
         private Entity[] _entityPrefab;
+
+        [SerializeField]
+        private AIPointPatrol _patrolPointPrefab;
 
         [SerializeField]
         private CircleArea _spawnArea;
@@ -52,12 +56,31 @@ namespace SpaceShooter
         {
             for (int i = 0; i < _spawnAmount; i++)
             {
-                var index = Random.Range(0, _entityPrefab.Length);
+                var index = UnityEngine.Random.Range(0, _entityPrefab.Length);
 
                 var instance = Instantiate(_entityPrefab[index]);
 
                 instance.transform.position = _spawnArea.GetRandomPointInsideArea();
+
+                var ai = instance.GetComponent<AiController>();
+                if (ai)
+                {
+                    var values = Enum.GetValues(typeof(AiBehaviourEnum));
+                    ai.Behaviour = (AiBehaviourEnum)values.GetValue(UnityEngine.Random.Range(1, values.Length));
+                    ai.PatrolPoint = SpawnPatrolArea(instance.transform.position);
+                    var d = instance.GetComponent<Distructible>();
+                    d.TeamId = 3;
+                    Debug.Log(ai.PatrolPoint);
+                }
             }
+        }
+
+        private AIPointPatrol SpawnPatrolArea(Vector3 position)
+        {
+            var instance = Instantiate(_patrolPointPrefab);
+            instance.transform.position = position;
+
+            return instance;
         }
     }
 }

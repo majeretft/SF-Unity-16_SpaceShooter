@@ -21,7 +21,7 @@ namespace SpaceShooter
 
 
 #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             Handles.color = Color.cyan;
             Handles.DrawWireDisc(transform.position, transform.forward, _radius);

@@ -65,7 +65,7 @@ namespace SpaceShooter
 
         [SerializeField]
         private int _teamId;
-        public int TeamId => _teamId;
+        public int TeamId { get => _teamId; set => _teamId = value; }
 
         #endregion
 
@@ -121,14 +121,16 @@ namespace SpaceShooter
             Destroy(gameObject);
         }
 
-        protected virtual void OnEnable() {
+        protected virtual void OnEnable()
+        {
             if (_allDistructibles == null)
                 _allDistructibles = new HashSet<Distructible>();
 
             _allDistructibles.Add(this);
         }
 
-        protected virtual void OnDestroy() {
+        protected virtual void OnDestroy()
+        {
             _allDistructibles.Remove(this);
         }
 

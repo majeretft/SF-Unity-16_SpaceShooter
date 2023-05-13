@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: EpisodeB
   m_EditorClassIdentifier: 
   _episodeName: Episode B
-  _levels: []
-  _previewImage: {fileID: 0}
+  _episodeText: 'Starter mission: Get 20 points and lead through debris'
+  _levels:
+  - GameScene_2
+  _previewImage: {fileID: 21300000, guid: 24bf528aca74a024280d5a57e756dc05, type: 3}
